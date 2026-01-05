@@ -14,7 +14,6 @@ public class OllamaChatRunner implements CommandLineRunner {
 	 public OllamaChatRunner(ChatClient.Builder chatClientBuilder, ToolCallbackProvider tools) {
 
      this.chatClient = chatClientBuilder
-             .defaultSystem("Please prioritise context information for answering questions")
              .defaultToolCallbacks(tools)
              .build();
 	}
