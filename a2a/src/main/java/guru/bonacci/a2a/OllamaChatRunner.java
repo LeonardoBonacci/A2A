@@ -17,12 +17,13 @@ public class OllamaChatRunner implements CommandLineRunner {
              .defaultToolCallbacks(tools)
              .build();
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Starting Ollama 3.2 chat POC...");
 
-	  CallResponseSpec resp = chatClient.prompt("Generate a concise weather forecast for Paris today and send it via the MCP tool `sendWeatherEvent`.").call();
+	  CallResponseSpec resp = chatClient.prompt("Generate a concise weather forecast for Paris today and send it via the MCP tool `sendWeatherEvent`. " +
+	  	"Also, send a funny oneliner to MCP tool `sendJokes` without quotes.").call();
 
     // Print the model responses
     System.out.println(resp.content());

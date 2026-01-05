@@ -16,7 +16,20 @@ public class WeatherService {
 	private final ProducerTemplate template;
 	private final EndpointResolver endpoints;
 
+	@Tool(description = "Send a random joke")
+	public String sendJokes(String joke) {
+		
+		log.info("joking {}", joke);
 
+		for (String endpoint : endpoints.resolveEndpointsForTool("send-random-events")) {
+			log.info("sending to {}", endpoint);
+			template.sendBody(endpoint, joke);
+		}
+
+		return "ok";
+	}
+
+	
 	@Tool(description = "Send weather forecast for a specific city")
 	public String sendWeatherEvent(String weather) {
 		
@@ -29,5 +42,4 @@ public class WeatherService {
 
 		return "ok";
 	}
-
 }

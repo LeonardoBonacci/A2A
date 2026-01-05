@@ -2,6 +2,9 @@
   "tools": {
     "send-weather-events": {
       "connectors": ["kafka-weather", "kafka-weather2"]
+    },
+    "send-random-events": {
+      "connectors": ["kafka-random"]
     }
   },
   "connectors": {
@@ -9,8 +12,12 @@
       "endpoint": "kafka:weather-events",
       "params": { "brokers": "localhost:9092" }
     },
-     "kafka-weather2": {
+    "kafka-weather2": {
       "endpoint": "kafka:weather-archive",
+      "params": { "brokers": "localhost:9092" }
+    },
+    "kafka-random": {
+      "endpoint": "kafka:random-events",
       "params": { "brokers": "localhost:9092" }
     }
   }
