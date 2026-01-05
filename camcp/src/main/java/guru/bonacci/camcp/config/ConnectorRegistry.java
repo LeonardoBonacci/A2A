@@ -30,47 +30,27 @@ public class ConnectorRegistry {
 		connectorsFromJson.keySet().forEach(name -> enabledConnectors.putIfAbsent(name, true));
 
 		// Override connectors (these values come from a different data store)
-		disableConnector("dont-use-me");
+//		disableConnector("dont-use-me");
 	}
 
 	/**
 	 * Programmatically add a connector with initial enabled/disabled state
 	 */
-	public void disableConnector(String connectorName) {
-		enabledConnectors.put(connectorName, false);
-	}
+//	public void disableConnector(String connectorName) {
+//		enabledConnectors.put(connectorName, false);
+//	}
 
-	public boolean isEnabled(String connectorName) {
-		return enabledConnectors.getOrDefault(connectorName, false);
-	}
+//	public boolean isEnabled(String connectorName) {
+//		return enabledConnectors.getOrDefault(connectorName, false);
+//	}
 
 	public ToolConfig getToolConfig(String toolName) {
 		return flowConfigLoader.getFlowsConfig().tools().get(toolName);
 	}
 
-	 public List<ConnectorInfo> getConnectorInfosByToolName(String toolName) {
-     ToolConfig toolConfig = getToolConfig(toolName);
-     if (toolConfig == null) {
-         return List.of(); 
-     }
-
-     // Map each connectorName to ConnectorInfo (name + priority)
-     return toolConfig.connectors().stream()
-             .map(name -> {
-                 Connector c = getConnectors().get(name);
-                 if (c != null) {
-                     return new ConnectorInfo(name, c.priority());
-                 } else {
-                     return null;
-                 }
-             })
-             .filter(ci -> ci != null)
-             .collect(Collectors.toList());
-	}
-
 	public Map<String, Connector> getConnectors() {
 		return flowConfigLoader.getFlowsConfig().connectors().entrySet().stream()
-        .filter(entry -> isEnabled(entry.getKey()))
+//        .filter(entry -> isEnabled(entry.getKey()))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	}
 }

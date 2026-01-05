@@ -24,13 +24,15 @@ public class OllamaChatRunner implements CommandLineRunner {
 
 	  CallResponseSpec resp = chatClient.prompt(
 	  		"""
-	  			Discover use the highest priority connector for `sendWeatherEvent` via the MCP tool `getConnectors`"
-	  			Only for the highest priority connector, generate a concise weather forecast for Paris today and send it via the MCP tool `sendWeatherEvent`. 
-	  			Also, send a funny oneliner to MCP tool `sendJokes` without quotes.
+	  			Pick the highest priority connector for via the MCP tool `get-connectors`, using toolName `send-weather-event`"
+	  			Tell me which you picked.
+
+	  			Only for the highest priority connector, generate a oneliner weather forecast for Paris today and send it via the MCP tool `send-weather-event`, including the connector name as a parameter. 
 	  			
 	  			In the end, tell me what you did.
 	  		""")
   		.call();
+
 
 //	  CallResponseSpec resp = chatClient.prompt("Show me the available connectors for a the tool `send-weather-events` via the MCP tool `getConnectors`").call();
     // Print the model responses

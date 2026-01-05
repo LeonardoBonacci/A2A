@@ -9,13 +9,13 @@
   },
   "connectors": {
     "kafka-weather": {
-      "priority": 1,
+      "priority": 100,
       "name": "kafka-weather",
       "endpoint": "kafka:weather-events",
       "params": { "brokers": "localhost:9092" }
     },
     "kafka-weather2": {
-      "priority": 2,
+      "priority": 50,
       "name": "kafka-weather2",
       "endpoint": "kafka:weather-archive",
       "params": { "brokers": "localhost:9092" }

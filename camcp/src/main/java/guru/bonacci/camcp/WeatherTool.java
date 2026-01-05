@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import guru.bonacci.camcp.config.ConnectorInfo;
 import guru.bonacci.camcp.config.ConnectorRegistry;
 import guru.bonacci.camcp.config.EndpointResolver;
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +24,7 @@ public class WeatherTool {
 
 	@Tool(name = "get-connectors", description = "Returns the connectors available for a given tool")
 	public List<ConnectorInfo> getConnectors(String toolName) {
-		
-		return registry.getConnectorInfosByToolName(toolName);
+		return List.of(new ConnectorInfo("kafka-weather", 100), new ConnectorInfo("kafka-weather2", 50));
 	}
 	
 	private static final String SEND_RANDOM_EVENTS_TOOLNAME = "send-random-events";
