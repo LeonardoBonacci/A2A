@@ -11,12 +11,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class WeatherService {
+public class WeatherTool {
 
 	private final ProducerTemplate template;
 	private final EndpointResolver endpoints;
 
-	@Tool(description = "Send a random joke")
+	private static final String SEND_RANDOM_EVENTS_TOOLNAME = "send-random-events";
+
+	
+	@Tool(name = SEND_RANDOM_EVENTS_TOOLNAME, description = "Send a random joke")
 	public String sendJokes(String joke) {
 		
 		log.info("joking {}", joke);
@@ -29,13 +32,14 @@ public class WeatherService {
 		return "ok";
 	}
 
+	private static final String SEND_WEATHER_EVENTS_TOOLNAME = "send-weather-events";
 	
-	@Tool(description = "Send weather forecast for a specific city")
+	@Tool(name = SEND_WEATHER_EVENTS_TOOLNAME, description = "Send weather forecast for a specific city")
 	public String sendWeatherEvent(String weather) {
 		
 		log.info("weather request {}", weather);
 
-		for (String endpoint : endpoints.resolveEndpointsForTool("send-weather-events")) {
+		for (String endpoint : endpoints.resolveEndpointsForTool(SEND_WEATHER_EVENTS_TOOLNAME)) {
 			log.info("sending to {}", endpoint);
 			template.sendBody(endpoint, weather);
 		}

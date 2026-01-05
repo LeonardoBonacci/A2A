@@ -16,14 +16,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CaMCPApp implements ApplicationRunner {
 
-	private final WeatherService tester;
+	private final WeatherTool tester;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CaMCPApp.class, args);
 	}
 	
   @Bean
-  ToolCallbackProvider weatherTools(WeatherService weatherService) {
+  ToolCallbackProvider weatherTools(WeatherTool weatherService) {
       return MethodToolCallbackProvider.builder().toolObjects(weatherService).build();
   }
 

@@ -1,29 +1,29 @@
 package guru.bonacci.camcp.config;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class EndpointResolver {
 
-	private final FlowsConfig flowsConfig;
+	private final ConnectorRegistry connectorRegistry;
 
-	public EndpointResolver(FlowConfigLoader loader) {
-		this.flowsConfig = loader.getFlowsConfig();
-	}
 
 	public List<String> resolveEndpointsForTool(String toolName) {
-		ToolConfig tool = flowsConfig.tools().get(toolName);
-
-		if (tool == null || tool.connectors().isEmpty()) {
-			throw new IllegalStateException("No connectors defined for tool: " + toolName);
-		}
-
-		return tool.connectors().stream().map(flowsConfig.connectors()::get).map(this::buildUri).toList();
+		ToolConfig tool = connectorRegistry.getToolConfig(toolName);
+		return tool.connectors().stream().map(connectorRegistry.getConnectors()::get).map(this::buildUri).filter(Objects::nonNull).toList();
 	}
 
 	private String buildUri(Connector connector) {
+		if (connector == null) {
+			return null;
+		}
+		
 		StringBuilder uri = new StringBuilder(connector.endpoint());
 		if (connector.params() != null && !connector.params().isEmpty()) {
 			uri.append("?");

@@ -28,7 +28,6 @@ public class FlowConfigLoader {
 				flowsConfig = mapper.readValue(is, FlowsConfig.class);
 			}
 
-			// ✅ validate bindings
 			validateBindings(flowsConfig);
 
 		} catch (Exception e) {
