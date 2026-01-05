@@ -14,7 +14,6 @@ public class WeatherService {
 	private final ProducerTemplate template;
 	private final EndpointResolver endpoints;
 
-	
 	@Tool(description = "Get weather forecast for a specific latitude/longitude")
 	public String getWeatherByLocation(int latitude, int longitude) {
 
@@ -26,15 +25,17 @@ public class WeatherService {
 		}
 		return "The forecast is for sunny weather";
 	}
-	
-	@Tool(name = "send-weather-events", description = "Send weather forecast for a specific city")
-	public String sendWeatherEvent(String weather) {
 
-    for (String endpoint : endpoints.resolveEndpointsForTool("send-weather-events")) {
-  		System.out.println("sending to " + endpoint);
-      template.sendBody(endpoint, weather);
-    }
-    
+	@Tool(description = "Send weather forecast for a specific city")
+	public String sendWeatherEvent(String weather) {
+		
+		System.out.println("weather request " + weather);
+
+		for (String endpoint : endpoints.resolveEndpointsForTool("send-weather-events")) {
+			System.out.println("sending to " + endpoint);
+			template.sendBody(endpoint, weather);
+		}
+
 		return "ok";
 	}
 
