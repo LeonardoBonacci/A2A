@@ -2,26 +2,28 @@ package guru.bonacci.a2a;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
+import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class OllamaChatRunner implements CommandLineRunner {
 
-	private final ChatClient.Builder chatClientBuilder;
+	private final ChatClient chatClient;
+	
+	 public OllamaChatRunner(ChatClient.Builder chatClientBuilder, ToolCallbackProvider tools) {
 
+     this.chatClient = chatClientBuilder
+             .defaultSystem("Please prioritise context information for answering questions")
+             .defaultToolCallbacks(tools)
+             .build();
+	}
+	
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Starting Ollama 3.2 chat POC...");
 
-		 // Build a ChatClient from the auto‑configured builder
-    ChatClient chatClient = chatClientBuilder.build();
-    
-    // Send messages to the model
-    CallResponseSpec resp = chatClient.prompt("Hello Ollama 3.2! Please respond with a short friendly greeting.").call();
+	  CallResponseSpec resp = chatClient.prompt("What is the weather on lat 10 lon 10?").call();
 
     // Print the model responses
     System.out.println(resp.content());
