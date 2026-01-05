@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import guru.bonacci.camcp.config.EndpointResolver;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeatherService {
@@ -14,25 +16,14 @@ public class WeatherService {
 	private final ProducerTemplate template;
 	private final EndpointResolver endpoints;
 
-	@Tool(description = "Get weather forecast for a specific latitude/longitude")
-	public String getWeatherByLocation(int latitude, int longitude) {
-
-		if (latitude == 10 && longitude == 10) {
-			return "The forecast for latitude 10 and longitude 10 is for rainy weather";
-		}
-		if (latitude == 20 && longitude == 20) {
-			return "The forecast for latitude 20 and longitude 20 is for stormy weather";
-		}
-		return "The forecast is for sunny weather";
-	}
 
 	@Tool(description = "Send weather forecast for a specific city")
 	public String sendWeatherEvent(String weather) {
 		
-		System.out.println("weather request " + weather);
+		log.info("weather request {}", weather);
 
 		for (String endpoint : endpoints.resolveEndpointsForTool("send-weather-events")) {
-			System.out.println("sending to " + endpoint);
+			log.info("sending to {}", endpoint);
 			template.sendBody(endpoint, weather);
 		}
 
