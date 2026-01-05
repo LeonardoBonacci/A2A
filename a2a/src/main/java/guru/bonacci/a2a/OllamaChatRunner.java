@@ -23,7 +23,7 @@ public class OllamaChatRunner implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Starting Ollama 3.2 chat POC...");
 
-	  CallResponseSpec resp = chatClient.prompt("What is the weather on lat 10 lon 10?").call();
+	  CallResponseSpec resp = chatClient.prompt("Generate a concise weather forecast for Paris today and send it via the MCP tool `sendWeatherEvent`.").call();
 
     // Print the model responses
     System.out.println(resp.content());
