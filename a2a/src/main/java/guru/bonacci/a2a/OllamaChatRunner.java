@@ -22,9 +22,17 @@ public class OllamaChatRunner implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Starting Ollama 3.2 chat POC...");
 
-	  CallResponseSpec resp = chatClient.prompt("Generate a concise weather forecast for Paris today and send it via the MCP tool `sendWeatherEvent`. " +
-	  	"Also, send a funny oneliner to MCP tool `sendJokes` without quotes.").call();
+	  CallResponseSpec resp = chatClient.prompt(
+	  		"""
+	  			Discover use the highest priority connector for `sendWeatherEvent` via the MCP tool `getConnectors`"
+	  			Only for the highest priority connector, generate a concise weather forecast for Paris today and send it via the MCP tool `sendWeatherEvent`. 
+	  			Also, send a funny oneliner to MCP tool `sendJokes` without quotes.
+	  			
+	  			In the end, tell me what you did.
+	  		""")
+  		.call();
 
+//	  CallResponseSpec resp = chatClient.prompt("Show me the available connectors for a the tool `send-weather-events` via the MCP tool `getConnectors`").call();
     // Print the model responses
     System.out.println(resp.content());
 	}  

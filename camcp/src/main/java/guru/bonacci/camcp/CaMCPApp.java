@@ -29,6 +29,6 @@ public class CaMCPApp implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		tester.sendWeatherEvent("Berlin " + Instant.now());
+//		tester.sendWeatherEvent("Berlin " + Instant.now());
 	}
 }

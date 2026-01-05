@@ -1,5 +1,6 @@
 package guru.bonacci.camcp.config;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -45,6 +46,26 @@ public class ConnectorRegistry {
 
 	public ToolConfig getToolConfig(String toolName) {
 		return flowConfigLoader.getFlowsConfig().tools().get(toolName);
+	}
+
+	 public List<ConnectorInfo> getConnectorInfosByToolName(String toolName) {
+     ToolConfig toolConfig = getToolConfig(toolName);
+     if (toolConfig == null) {
+         return List.of(); 
+     }
+
+     // Map each connectorName to ConnectorInfo (name + priority)
+     return toolConfig.connectors().stream()
+             .map(name -> {
+                 Connector c = getConnectors().get(name);
+                 if (c != null) {
+                     return new ConnectorInfo(name, c.priority());
+                 } else {
+                     return null;
+                 }
+             })
+             .filter(ci -> ci != null)
+             .collect(Collectors.toList());
 	}
 
 	public Map<String, Connector> getConnectors() {

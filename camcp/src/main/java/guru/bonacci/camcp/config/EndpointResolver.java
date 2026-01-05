@@ -19,6 +19,12 @@ public class EndpointResolver {
 		return tool.connectors().stream().map(connectorRegistry.getConnectors()::get).map(this::buildUri).filter(Objects::nonNull).toList();
 	}
 
+	public String resolveEndpointsForConnector(String toolName, String connectorName) {
+		ToolConfig tool = connectorRegistry.getToolConfig(toolName);
+		return tool.connectors().stream().map(connectorRegistry.getConnectors()::get)
+				.filter(connector -> connector.name().equals(connectorName)).map(this::buildUri).findFirst().get();
+	}
+
 	private String buildUri(Connector connector) {
 		if (connector == null) {
 			return null;
