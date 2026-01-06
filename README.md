@@ -1,6 +1,7 @@
 # A2A
 
 ```
+
 ollama run llama3.2 
 
 docker exec -it broker kafka-console-consumer \
